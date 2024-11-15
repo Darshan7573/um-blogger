@@ -23,5 +23,10 @@ const createPost = async (req, res) => {
     }
 }
 
+const getPosts = async (req, res) => {
+    const posts = await postModel.find().populate('user', 'username');
+    res.json({ success: true, posts })
+}
 
-export { createPost }
+
+export { createPost, getPosts }
