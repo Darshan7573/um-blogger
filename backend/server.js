@@ -23,5 +23,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server Connected  to ${port}`)
 })
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzZlM2FkMzM4MWUzOWE0MWZhNDFmZSIsImlhdCI6MTczMTY1MTExOX0.h6zFwx3B5BJZtXq793zk8s1re9nnsuxPT4wCn9rUznQ

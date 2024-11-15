@@ -24,9 +24,32 @@ const createPost = async (req, res) => {
 }
 
 const getPosts = async (req, res) => {
-    const posts = await postModel.find().populate('user', 'username');
-    res.json({ success: true, posts })
+    try {
+        const posts = await postModel.find().populate('user', 'username');
+        res.json({ success: true, posts })
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+    }
+}
+
+const updatePosts = async (req, res) => {
+    try {
+        const post = await postModel.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            content: req.body.content,
+            tags: req.body.tags
+        }, { new: true })
+
+        if (!post) {
+            return res.json({ success: false, message: "Post not found" });
+        }
+        res.json({ success: true, message: 'Post Updated Successfully' })
+
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+
+    }
 }
 
 
-export { createPost, getPosts }
+export { createPost, getPosts, updatePosts }
