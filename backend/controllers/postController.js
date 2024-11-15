@@ -51,5 +51,20 @@ const updatePosts = async (req, res) => {
     }
 }
 
+const deletePost = async (req, res) => {
+    try {
+        const post = await postModel.findByIdAndDelete(req.params.id)
 
-export { createPost, getPosts, updatePosts }
+        if (!post) {
+            return res.json({ success: false, message: 'Post not found' })
+        }
+
+        res.json({ success: true, message: 'Post Deleted Successfully' })
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+    }
+
+}
+
+
+export { createPost, getPosts, updatePosts, deletePost }
