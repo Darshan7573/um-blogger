@@ -34,15 +34,22 @@ const getPosts = async (req, res) => {
 
 const updatePosts = async (req, res) => {
     try {
+        if (!post) {
+            return res.json({ success: false, message: "Post not found" });
+        }
+
+        if (post.user.toString() !== req.user.id) {
+            return res.json({ success: false, message: 'You are not authorized to edit this post' })
+        }
+
         const post = await postModel.findByIdAndUpdate(req.params.id, {
             title: req.body.title,
             content: req.body.content,
             tags: req.body.tags
         }, { new: true })
 
-        if (!post) {
-            return res.json({ success: false, message: "Post not found" });
-        }
+
+
         res.json({ success: true, message: 'Post Updated Successfully' })
 
     } catch (error) {
@@ -57,6 +64,10 @@ const deletePost = async (req, res) => {
 
         if (!post) {
             return res.json({ success: false, message: 'Post not found' })
+        }
+
+        if (post.user.toString() !== req.user.id) {
+            return res.json({ success: false, message: "You are not authorized to delete this post" });
         }
 
         res.json({ success: true, message: 'Post Deleted Successfully' })
